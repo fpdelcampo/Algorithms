@@ -4,7 +4,17 @@ class BST:
         self.right = right
         self.data = data
     
-    
+def iterative_least_common_ancestor(root, n1, n2):
+    while root!=None:
+        if n1<root.left and n2<root.right:
+            root=root.left
+
+        elif n1>root.left and n2>root.right:
+            root=root.right
+        else:
+            return root
+
+
 def build(root, node): # Assumes uniqueness of values
     if root == None:
         return(node)
