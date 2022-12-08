@@ -6,8 +6,6 @@ def bubble_sort(nums):
         for j in range(length-i-1): # We could also do range(length), but this is a nice optimization
             if nums[j]>nums[j+1]:
                 nums[j], nums[j+1] = nums[j+1], nums[j] # Swapping done in a nice pythonic way
-    
-    return nums
 
 def insertion_sort(nums):
     length = len(nums)
@@ -17,24 +15,41 @@ def insertion_sort(nums):
             nums[j], nums[j-1] = nums[j-1], nums[j]
             j -= 1
 
-    return nums
+def selection_sort(nums):
+    length = len(nums)
+    for i in range(length):
+        index = i
+        for j in range(i+1, length):
+            if nums[j] < nums[index]:
+                index = j
+        nums[i], nums[index] = nums[index], nums[i]
 
 def main():
     comp = list(range(1000))
-    test = list(range(1000))
-    random.shuffle(test)
 
-    bubble_sorted = bubble_sort(test.copy())
-    if bubble_sorted == comp:
+    bubble_test = list(range(1000))
+    random.shuffle(bubble_test)
+    bubble_sort(bubble_test)
+    if bubble_test == comp:
         print("Bubble Sort Success")
     else:
         print("Bubble Sort Failed")
 
-    insertion_sorted = insertion_sort(test.copy())
-    if insertion_sorted == comp:
+    insertion_test = list(range(1000))
+    random.shuffle(insertion_test)
+    insertion_sort(insertion_test)
+    if insertion_test == comp:
         print("Insertion Sort Success")
     else:
         print("Insertion Sort Failed")
+
+    selection_test = list(range(1000))
+    random.shuffle(selection_test)
+    selection_sort(selection_test)
+    if selection_test == comp:
+        print("Selection Sort Success")
+    else:
+        print("Selection Sort Failed")
 
 if __name__ == "__main__":
     main()

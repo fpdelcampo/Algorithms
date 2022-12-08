@@ -1,4 +1,20 @@
 class BST:
+    def __init__(self, root):
+        self.root = root
+    
+    def insert(self, node): # Assumes uniqueness of values
+        if root == None:
+            return(node)
+        elif node.data<root.data:
+            root.left = build(root.left, node)
+        else:
+            root.right = build(root.right, node)
+    
+    def build(self, nodes):
+        for node in nodes:
+            self.insert(node)
+
+class BSTNode:
     def __init__(self, data, left=None, right=None) -> None:
         self.left = left
         self.right = right
@@ -13,15 +29,6 @@ def iterative_least_common_ancestor(root, n1, n2):
             root=root.right
         else:
             return root
-
-
-def build(root, node): # Assumes uniqueness of values
-    if root == None:
-        return(node)
-    elif node.data<root.data:
-        root.left = build(root.left, node)
-    else:
-        root.right = build(root.right, node)
 
 def inorder(root, visited):
     if root.left!=None:

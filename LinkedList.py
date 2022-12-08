@@ -31,7 +31,7 @@ def recursive_reverse(root):
     if root.next!=None:
         return root
     temp = root
-    temp.next = recursive_reverse(temp.next)
+    temp.next = recursive_reverse(root.next)
     return root
 
 def main():
