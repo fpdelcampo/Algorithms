@@ -31,6 +31,7 @@ def partition(array, pivot):
         if array[i] < array[-1]:
             array[i], array[j] = array[j], array[i]
         j += 1
+    array[-1], array[j] = array[j], array[-1]
 
 def main():
     comp = list(range(1000))
