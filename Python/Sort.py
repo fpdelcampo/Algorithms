@@ -24,6 +24,14 @@ def selection_sort(nums):
                 index = j
         nums[i], nums[index] = nums[index], nums[i]
 
+def partition(array, pivot):
+    j = 0
+    array[pivot], array[-1] = array[-1], array[pivot]
+    for i in range(pivot-1):
+        if array[i] < array[-1]:
+            array[i], array[j] = array[j], array[i]
+        j += 1
+
 def main():
     comp = list(range(1000))
 
