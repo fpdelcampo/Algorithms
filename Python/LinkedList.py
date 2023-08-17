@@ -7,6 +7,25 @@ class LinkedList:
     def __init__(self, root=None) -> None:
         self.root = root
     
+    def insert(self, node):
+        if self.root == None:
+            self.root = node
+        else:
+            copy = self.root
+            while copy!=None:
+                copy = copy.next
+            copy.next = node
+    
+    def query(self, value):
+        if self.root == None:
+            return False
+        copy = self.root
+        while copy.next != None:
+            copy=copy.next
+        if copy.value == value:
+            return True
+        return False
+    
 def iterative_reverse(root):
     prev = None
     curr = root
@@ -42,9 +61,7 @@ def is_cyclic(root):
         copy=copy.next
     if copy==None:
         return False
-    return true
-    
-
+    return True
 
 def main():
     pass
