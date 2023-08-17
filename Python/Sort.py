@@ -24,6 +24,22 @@ def selection_sort(nums):
                 index = j
         nums[i], nums[index] = nums[index], nums[i]
 
+def merge(a, b):
+    array = []
+    size_a = len(a)
+    size_b = len(b)
+    size = len(a)+len(b)
+    j, k = 0, 0
+    for i in range(size):
+        if a[j] < b[k] and k < size_b:
+            array.append(b[k])
+            k+=1
+        else:
+            array.append(a[j])
+            j+=1
+def merge_sort(nums):
+    pass
+
 def partition(array, pivot):
     j = 0
     array[pivot], array[-1] = array[-1], array[pivot]
@@ -32,6 +48,9 @@ def partition(array, pivot):
             array[i], array[j] = array[j], array[i]
         j += 1
     array[-1], array[j] = array[j], array[-1]
+
+def quicksort(nums):
+    pass
 
 def main():
     comp = list(range(1000))

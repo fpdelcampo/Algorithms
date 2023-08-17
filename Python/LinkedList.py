@@ -34,6 +34,18 @@ def recursive_reverse(root):
     temp.next = recursive_reverse(root.next)
     return root
 
+def is_cyclic(root):
+    if root.next == None:
+        return False
+    copy = root.next
+    while copy!=root and copy!=None:
+        copy=copy.next
+    if copy==None:
+        return False
+    return true
+    
+
+
 def main():
     pass
 
