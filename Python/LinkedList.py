@@ -6,13 +6,21 @@ class Node:
 class LinkedList:
     def __init__(self, root=None) -> None:
         self.root = root
-    
+
+    def build_from_vals(self, vals):
+        self.root = Node(vals[0])
+        vals = vals[0:]
+        copy = self.root
+        for val in vals:
+            copy.next = Node(val)
+            copy = copy.next
+
     def insert(self, node):
         if self.root == None:
             self.root = node
         else:
             copy = self.root
-            while copy!=None:
+            while copy.next!=None:
                 copy = copy.next
             copy.next = node
     
@@ -26,6 +34,12 @@ class LinkedList:
             return True
         return False
     
+    def display(self, sep=", "):
+        copy = self.root
+        while copy != None:
+            print(copy.value, end=sep)
+            copy = copy.next
+        
 def iterative_reverse(root):
     prev = None
     curr = root
@@ -64,7 +78,11 @@ def is_cyclic(root):
     return True
 
 def main():
-    pass
+    linked_list = LinkedList(Node(0))
+    linked_list.insert(1)
+    linked_list.insert(2)
+    linked_list.display()
+
 
 if __name__ == "__main__":
     main()
