@@ -1,24 +1,70 @@
+class BSTNode:
+    def __init__(self, data, left=None, right=None) -> None:
+        self.data = data
+        self.left = left
+        self.right = right
+
 class BST:
     def __init__(self, root):
         self.root = root
     
     def insert(self, node): # Assumes uniqueness of values
-        if root == None:
-            return(node)
-        elif node.data<root.data:
-            root.left = build(root.left, node)
+        if self.root == None:
+            self.root = node
         else:
-            root.right = build(root.right, node)
+            parent = None
+            copy = self.root
+            while copy != None:
+                parent = copy
+                if node.value < copy.value:
+                    copy = copy.left
+                else:
+                    copy = copy.right
+            if node.data < parent.data:
+                parent.left = node
+            else:
+                parent.right = node
     
-    def build(self, nodes):
+    def build(self, nodes): # Handles insertion of multiple nodes
         for node in nodes:
             self.insert(node)
 
-class BSTNode:
-    def __init__(self, data, left=None, right=None) -> None:
-        self.left = left
-        self.right = right
-        self.data = data
+    def delete(self, value):
+        if self.root == None:
+            return
+        parent = None
+        copy = self.root
+        while copy.data != value:
+            if copy.left == None and copy.right == None:
+                return # Data not found
+            parent = copy
+            if value < self.copy.data:
+                copy = copy.left
+            else:
+                copy = copy.right
+        num_matches = 0
+        
+        if copy.left != None:
+            num_matches += 1
+        if copy.right != None:
+            num_matches += 1
+        
+        if num_matches == 0:
+            if parent.left == value:
+                parent.left = None
+            else:
+                parent.right = None
+        elif num_matches == 1:
+            if parent.left == value:
+                parent.left = copy.left
+            else:
+                parent.right = copy.right
+        else:
+
+            
+        
+        
+
     
 def iterative_least_common_ancestor(root, n1, n2):
     while root!=None:
