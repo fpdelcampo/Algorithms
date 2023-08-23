@@ -7,6 +7,7 @@ class BSTNode:
 class BST:
     def __init__(self, root=None):
         self.root = root
+        self.visited = []
     
     def insert(self, node): # Assumes uniqueness of values
         if self.root == None:
@@ -61,47 +62,43 @@ class BST:
                 parent.right = copy.right
         else:
             tracker = copy
-            print(tracker.data,"+++")
-            print(copy.data,"----")
             while tracker.right != None:
                 tracker.data = tracker.right.data
                 tracker = tracker.right
             tracker = None
     
     def inorder(self):
-        visited = []
-        visited = self.inorder_recursive(self.root, visited)
-        return visited
+        self.visited = []
+        self.inorder_recursive(self.root)
     
-    def inorder_recursive(self, node, visited):
+    def inorder_recursive(self, node):
         if node == None:
             return
-        self.inorder_recursive(node.left, visited)
-        visited.append(node.data)
-        self.inorder_recursive(node.right, visited)
+        self.inorder_recursive(node.left)
+        self.visited.append(node.data)
+        self.inorder_recursive(node.right)
 
     def preorder(self):
-        visited = self.preorder_recursive(self.root, [])
-        return visited
+        self.visited = []
+        self.preorder_recursive(self.root)
     
-    def preorder_recursive(self, node, visited):
+    def preorder_recursive(self, node):
         if node == None:
             return
-        visited.append(node.data)
-        self.preorder_recursive(node.left, visited)
-        self.preorder_recursive(node.right, visited)
-        return visited
+        self.visited.append(node.data)
+        self.preorder_recursive(node.left)
+        self.preorder_recursive(node.right)
     
     def postorder(self):
-        visited = self.postorder_recursive(self.root, [])
-        return visited
-    
-    def postorder_recursive(self, node, visited):
+        self.visited = []
+        self.postorder_recursive(self.root)
+
+    def postorder_recursive(self, node):
         if node == None:
             return
-        self.postorder_recursive(node.left, visited)
-        self.postorder_recursive(node.right, visited)
-        visited.append(node.data)
+        self.postorder_recursive(node.left)
+        self.postorder_recursive(node.right)
+        self.visited.append(node.data)
 
     def iterative_least_common_ancestor(self, n1, n2):
         copy = self.root
@@ -122,20 +119,21 @@ def test_bst_methods():
     bst = BST()
     values = [50, 30, 70, 20, 40, 60, 80]
     bst.build(values)
-    
-    print(bst.root.data)
 
-    print(bst.root.left.data, bst.root.right.data)
+    expected_inorder = [20, 30, 40, 50, 60, 70, 80]
+    bst.inorder()
+    actual_inorder = bst.visited
+    assert expected_inorder == actual_inorder, "Inorder failed!"
 
-    print(bst.root.left.left.data, bst.root.left.right.data, '/', bst.root.right.left.data, bst.root.right.right.data)
-    
-    bst.delete(70)
+    expected_preorder = [50, 30, 20, 40, 70, 60, 80]
+    bst.preorder()
+    actual_preorder = bst.visited
+    assert expected_preorder == actual_preorder, "Preorder failed!"
 
-    print(bst.root.data)
-
-    print(bst.root.left.data, bst.root.right.data)
-
-    print(bst.root.left.left.data, bst.root.left.right.data, '/', bst.root.right.left.data)
+    expected_postorder = [20, 40, 30, 60, 80, 70, 50]
+    bst.postorder()
+    actual_postorder = bst.visited
+    assert expected_postorder == actual_postorder, "Inorder failed!"
 
 
 if __name__ == "__main__":
