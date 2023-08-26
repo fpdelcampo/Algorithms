@@ -30,57 +30,85 @@ class BST:
         for node in nodes:
             self.insert(BSTNode(node))
 
-    def delete(self, value):
+    def isin(self, value):
+        copy = self.root
+        if self.root.data == value:
+            return True
+        while copy.left is not None and copy.right is not None:
+            if value < copy.data:
+                copy = copy.left
+            else:
+                copy = copy.right
+            if copy.data == value:
+                return True
+        return False
+
+    def delete(self, value): # Assumes value is in the BST
         if self.root == None:
             return
+        
         parent = None
         copy = self.root
+
+        print(f"{self.root.data} //// ")
         while copy.data != value:
-            if copy.left == None and copy.right == None:
-                return # Data not found
             parent = copy
             if value < copy.data:
                 copy = copy.left
             else:
                 copy = copy.right
-        num_matches = 0
-
-        if copy.left is not None:
-            num_matches += 1
-        if copy.right is not None:
-            num_matches += 1
         
-        if num_matches == 0:
-            if parent.left is not None and parent.left.data == value:
+        num = self.leaves(value)
+        
+        if num == 0:
+            if self.root.data == value:
+                self.root = None
+            elif parent.left is not None and parent.left.data == value:
                 parent.left = None
             else:
                 parent.right = None
-        elif num_matches == 1:
-            if parent.left is not None and parent.left.data == value:
-                if copy.left is not None:
-                    parent.left = copy.left
-                else:
-                    parent.left = copy.right
+        
+        elif num == 1:
+            if parent == None:
+                self.root = copy.left if copy.left is not None else copy.right
+            elif parent.left == copy:
+                parent.left = copy.left if copy.left is not None else copy.right
             else:
-                if copy.left is not None:
-                    parent.right = copy.left
-                else:
-                    parent.right = copy.right
+                parent.right = copy.left if copy.left is not None else copy.right
+        
         else:
-            x = parent if parent is not None else copy
-            tracker = None
-            while x.left is not None and x.right is not None:
-                tracker = x
-                if x.left is not None:
-                    x = x.left
+            # here the goal is to swap the value with the inorder successor's value, and then delete the inorder successor
+            # to do this, we need to find the parent of the inorder successor and the inorder successor
+            # copy.value = value, so we will start at copy
+            c = copy
+            p = None
+            first = True
+            while c.left is not None:
+                p = c
+                if first:
+                    c = c.right
+                    first = False
                 else:
-                    x = x.right
-            copy.data = x.data
-            if tracker.left.data == x.data:
-                tracker.left = None
+                    c = c.left
+            copy.data = c.data
+            if p.left.data == copy.data:
+                p.left = p.left.right
             else:
-                tracker.right = None
-            print(copy.data)
+                p.right = p.right.right     
+        
+    def leaves(self, value): # Assumes the value is in the BST
+        copy = self.root
+        while copy.data != value:
+            if value < copy.data:
+                copy = copy.left
+            else:
+                copy = copy.right
+        num = 0
+        if copy.left is not None:
+            num+=1
+        if copy.right is not None:
+            num+=1
+        return num
 
     def inorder(self):
         self.visited = []
@@ -154,17 +182,20 @@ def main():
     bst.delete(50)
     expected_inorder = [30, 40, 70, 80]
     bst.inorder()
-    print(bst.visited)
     actual_inorder = bst.visited
     assert expected_inorder == actual_inorder, "Deletion of node with two children failed!"
 
     # Test deleting root node (30)
-    print(bst.root.data)
     bst.delete(30)
     expected_inorder = [40, 70, 80]
     bst.inorder()
+    print(bst.visited)
+
     actual_inorder = bst.visited
     assert expected_inorder == actual_inorder, "Deletion of root node failed!"
+
+    bst = BST()
+    bst.build([50, 30, 70, 20, 40, 60, 80])
 
     expected_inorder = [20, 30, 40, 50, 60, 70, 80]
     bst.inorder()
