@@ -44,29 +44,44 @@ class BST:
             else:
                 copy = copy.right
         num_matches = 0
-        
-        if copy.left != None:
+
+        if copy.left is not None:
             num_matches += 1
-        if copy.right != None:
+        if copy.right is not None:
             num_matches += 1
         
         if num_matches == 0:
-            if parent.left == value:
+            if parent.left is not None and parent.left.data == value:
                 parent.left = None
             else:
                 parent.right = None
         elif num_matches == 1:
-            if parent.left == value:
-                parent.left = copy.left
+            if parent.left is not None and parent.left.data == value:
+                if copy.left is not None:
+                    parent.left = copy.left
+                else:
+                    parent.left = copy.right
             else:
-                parent.right = copy.right
+                if copy.left is not None:
+                    parent.right = copy.left
+                else:
+                    parent.right = copy.right
         else:
-            tracker = copy
-            while tracker.right != None:
-                tracker.data = tracker.right.data
-                tracker = tracker.right
+            x = parent if parent is not None else copy
             tracker = None
-    
+            while x.left is not None and x.right is not None:
+                tracker = x
+                if x.left is not None:
+                    x = x.left
+                else:
+                    x = x.right
+            copy.data = x.data
+            if tracker.left.data == x.data:
+                tracker.left = None
+            else:
+                tracker.right = None
+            print(copy.data)
+
     def inorder(self):
         self.visited = []
         self.inorder_recursive(self.root)
@@ -110,15 +125,46 @@ class BST:
                 copy = copy.right
             else:
                 return copy.data
+            
 def display(list_of_nodes):
     for node in list_of_nodes:
         print(node.data or node)
             
-def test_bst_methods():
+def main():
     # Create a BST and insert values
     bst = BST()
     values = [50, 30, 70, 20, 40, 60, 80]
     bst.build(values)
+
+    # Test deleting a leaf (20)
+    bst.delete(20)
+    expected_inorder = [30, 40, 50, 60, 70, 80]
+    bst.inorder()
+    actual_inorder = bst.visited
+    assert expected_inorder == actual_inorder, "Deletion of leaf node failed!"
+
+    # Test deleting a node with one child (60)
+    bst.delete(60)
+    expected_inorder = [30, 40, 50, 70, 80]
+    bst.inorder()
+    actual_inorder = bst.visited
+    assert expected_inorder == actual_inorder, "Deletion of node with one child failed!"
+
+    # Test deleting a node with two children (50)
+    bst.delete(50)
+    expected_inorder = [30, 40, 70, 80]
+    bst.inorder()
+    print(bst.visited)
+    actual_inorder = bst.visited
+    assert expected_inorder == actual_inorder, "Deletion of node with two children failed!"
+
+    # Test deleting root node (30)
+    print(bst.root.data)
+    bst.delete(30)
+    expected_inorder = [40, 70, 80]
+    bst.inorder()
+    actual_inorder = bst.visited
+    assert expected_inorder == actual_inorder, "Deletion of root node failed!"
 
     expected_inorder = [20, 30, 40, 50, 60, 70, 80]
     bst.inorder()
@@ -137,4 +183,4 @@ def test_bst_methods():
 
 
 if __name__ == "__main__":
-    test_bst_methods()
+    main()
