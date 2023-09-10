@@ -26,9 +26,6 @@ class Solution:
             if s[k] == "|":
                 pipes += 1
             prefix_pipes.append(pipes)
-        print(left_idx)
-        print(right_idx)
-        print(prefix_pipes)
         answers = []
         for q in queries:
             start, end = q
