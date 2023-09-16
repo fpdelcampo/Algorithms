@@ -28,17 +28,27 @@ def merge(a, b):
     array = []
     size_a = len(a)
     size_b = len(b)
-    size = len(a)+len(b)
     j, k = 0, 0
-    for i in range(size):
-        if a[j] < b[k] and k < size_b:
-            array.append(b[k])
-            k+=1
-        else:
+    while j < size_a and k < size_b:
+        if a[j] < b[k]:
             array.append(a[j])
             j+=1
+        else:
+            array.append(b[k])
+            k+=1
+    array.extend(a[j:])
+    array.extend(b[k:])
+    return array
+
 def merge_sort(nums):
-    pass
+    if len(nums) in [0,1]:
+        return nums
+    middle = len(nums)//2
+    left = nums[:middle]
+    right = nums[middle:]
+    left = merge_sort(left)
+    right = merge_sort(right)
+    return merge(left, right)
 
 def partition(array, pivot):
     j = 0
@@ -78,6 +88,14 @@ def main():
         print("Selection Sort Success")
     else:
         print("Selection Sort Failed")
+
+    merge_sort_test = list(range(1000))
+    random.shuffle(merge_sort_test)
+    merge_sort_result = merge_sort(merge_sort_test)
+    if merge_sort_result == comp:
+        print("Merge Sort Success")
+    else:
+        print("Merge Sort Failed")
 
 if __name__ == "__main__":
     main()
