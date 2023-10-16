@@ -50,6 +50,26 @@ def merge_sort(nums):
     right = merge_sort(right)
     return merge(left, right)
 
+# Assumes the input is non-negative
+def count_sort(nums, maximum):
+    if min(nums) < 0 or max(nums) > maximum:
+        raise ValueError("Please ensure that the minimum of nums is at least 0 and that the maximum of nums is equal to the maximum argument")
+    
+    sort_arr = [0 for _ in range(maximum+1)]
+    for num in nums:
+        sort_arr[num] += 1
+     
+    res = [0 for _ in range(len(nums))]
+    for i in range(1, maximum+1):
+        sort_arr[i] += sort_arr[i-1]
+
+    for num in nums[::-1]:
+        index = sort_arr[num] - 1
+        res[index] = num
+        sort_arr[num] -= 1
+    
+    return res
+
 def partition(array, pivot):
     j = 0
     array[pivot], array[-1] = array[-1], array[pivot]
@@ -96,6 +116,14 @@ def main():
         print("Merge Sort Success")
     else:
         print("Merge Sort Failed")
+
+    count_sort_test = list(range(1000))
+    random.shuffle(count_sort_test)
+    count_sort_result = count_sort(count_sort_test, 1000)
+    if count_sort_result == comp:
+        print("Count Sort Success")
+    else:
+        print("Count Sort Failed")
 
 if __name__ == "__main__":
     main()
