@@ -9,11 +9,9 @@ class Solution:
         for i in range(2,upper+1):
             if n%i == 0:
                 factors.append(i)
-        is_square = False
         for i in range(len(factors)-1,-1,-1):
             if factors[-1] != int(n/factors[i]):
                 factors.append(int(n/factors[i]))
-        print(factors)
         if k > len(factors):
             return -1
         else:
