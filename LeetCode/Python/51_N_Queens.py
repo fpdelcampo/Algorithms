@@ -1,6 +1,5 @@
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        squares = [] # a list of points that are attacked by a queen
         res = []
         def backtrack(row, y, d, ad, sequence, n):
             nonlocal res
