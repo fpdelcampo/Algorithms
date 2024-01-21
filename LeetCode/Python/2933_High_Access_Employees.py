@@ -9,14 +9,12 @@ class Solution:
         res = []
         for key in count:
             count[key].sort()
-        print(count)
 
         for key in count:
             tmp = []
             hit = False
             for i in range(1, len(count[key])):
                 tmp.append(count[key][i]- count[key][i-1])
-            print(key, tmp)
             for i in range(1, len(tmp)):
                 if tmp[i]+tmp[i-1] < 100:
                     hit = True
