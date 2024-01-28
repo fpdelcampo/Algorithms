@@ -45,48 +45,13 @@ class Segtree():
 def main():
     arr = list(range(1000))
     segtree = Segtree(arr)
-    print(segtree.segtree)
     successes = 0
     for _ in range(500):
         left = random.randint(0, 999)
         right = random.randint(left, 999)
         if segtree.query(left, right)  == (right * (right + 1)) // 2 - (left * (left - 1)) // 2:
-            print(left, right)
             successes += 1
-    print(segtree.query(500, 717))
     print(f"Successes: {successes}; Total: {500}")
 
 if __name__ == "__main__":
     main()
-# import random
-# arr = list(range(1000))
-# tree = [0] * 4 * len(arr)
-# def build(v, tl, tr):
-#     if tl == tr:
-#         tree[v] = arr[tl]
-#     else:
-#         tm = (tl + tr) // 2
-#         build(2 * v, tl, tm)
-#         build(2 * v + 1, tm + 1, tr)
-#         tree[v] = tree[2 * v] + tree[2 * v + 1]
-# def query_util(v, tl, tr, l, r):
-#     if l > r:
-#         return 0
-#     if l == tl and r == tr:
-#         return tree[v]
-#     tm = (tl + tr) // 2
-#     return query_util(2 * v, tl, tm, l, min(r, tm)) + query_util(2 * v + 1, tm + 1, tr, max(l, tm + 1), r)
-# def query(l, r):
-#     return query_util(1, 0, len(arr) - 1, l, r)
-
-# build(1, 0, len(arr) - 1)
-# res = query(3, 500)
-# success = 0
-# for i in range(500):
-#     left = random.randint(0, 999)
-#     right = random.randint(left, 999)
-#     if query(left, right) != (right * (right + 1)) // 2 - (left * (left - 1)) // 2:
-#         print(left, right)
-#     else:
-#         success += 1
-# print(success)
