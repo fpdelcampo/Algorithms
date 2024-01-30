@@ -25,6 +25,7 @@ class Segtree():
                 self.update_helper(2 * v, tl, tm, index, value)
             else:
                 self.update_helper(2 * v + 1, tm + 1, tr, index, value)
+            self.segtree[v] = self.f(self.segtree[2 * v], self.segtree[2 * v + 1])
     
     def update(self, index, value):
         self.update_helper(1, 0, len(self.arr) - 1 , index, value)
