@@ -1,0 +1,9 @@
+class Solution:
+    def maxAbsoluteSum(self, nums: List[int]) -> int:
+        curr_positive, curr_negative, best_positive, best_negative = 0, 0, float('-inf'), float('inf')
+        for num in nums:
+            curr_positive = max(num, curr_positive + num)
+            curr_negative = min(num, curr_negative + num)
+            best_positive = max(best_positive, curr_positive)
+            best_negative = min(best_negative, curr_negative)
+        return max(best_positive, -best_negative)
