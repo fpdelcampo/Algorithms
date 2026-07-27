@@ -18,6 +18,3 @@ class Solution:
         i = x // n
         j = x % n
         return i, j
-
-
-   

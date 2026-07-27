@@ -20,24 +20,3 @@ class Solution:
             curr = curr.next
         return cpy
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        # print(cpy.val)
-        # while curr:
-        #     print(curr.val)
-        #     if not curr.next:
-        #         break
-        #     elif curr.next.val in s:
-        #         print(f'found {curr.next.val}')
-        #         curr.next = curr.next.next
-        #     curr = curr.next
-        # return cpy

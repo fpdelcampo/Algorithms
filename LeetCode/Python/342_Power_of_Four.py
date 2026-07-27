@@ -9,5 +9,4 @@ class Solution:
                 comp = "0"+comp
         comp = "0b" + comp
         comp = int(comp, 2)
-        print(n & (n-1), n & comp, n, comp)
         return n != 0 and n & (n-1) == 0 and (n & comp) == n
